@@ -80,6 +80,33 @@ service AdminService {
   rpc DeleteTeacher(DeleteTeacherRequest) returns (DeleteTeacherResponse);
   rpc AddCourse(AddCourseRequest) returns (AddCourseResponse);
   rpc DeleteCourse(DeleteCourseRequest) returns (DeleteCourseResponse);
+  rpc GetCourses(Empty) returns (GetCoursesResponse);
+  rpc GetStudents(Empty) returns (GetStudentsResponse);
+  rpc GetTeachers(Empty) returns (GetTeachersResponse);
+}
+
+message Empty {}
+
+message Course {
+  int32 id = 1;
+  string title = 2;
+}
+
+message Teacher {
+  int32 id = 1;
+  string name = 2;
+}
+
+message GetCoursesResponse {
+  repeated Course courses = 1;
+}
+
+message GetStudentsResponse {
+  repeated Student students = 1;
+}
+
+message GetTeachersResponse {
+  repeated Teacher teachers = 1;
 }
 
 message AddStudentToCourseRequest {

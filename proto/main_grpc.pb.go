@@ -352,6 +352,9 @@ const (
 	AdminService_DeleteTeacher_FullMethodName      = "/proto.AdminService/DeleteTeacher"
 	AdminService_AddCourse_FullMethodName          = "/proto.AdminService/AddCourse"
 	AdminService_DeleteCourse_FullMethodName       = "/proto.AdminService/DeleteCourse"
+	AdminService_GetCourses_FullMethodName         = "/proto.AdminService/GetCourses"
+	AdminService_GetStudents_FullMethodName        = "/proto.AdminService/GetStudents"
+	AdminService_GetTeachers_FullMethodName        = "/proto.AdminService/GetTeachers"
 )
 
 // AdminServiceClient is the client API for AdminService service.
@@ -363,6 +366,9 @@ type AdminServiceClient interface {
 	DeleteTeacher(ctx context.Context, in *DeleteTeacherRequest, opts ...grpc.CallOption) (*DeleteTeacherResponse, error)
 	AddCourse(ctx context.Context, in *AddCourseRequest, opts ...grpc.CallOption) (*AddCourseResponse, error)
 	DeleteCourse(ctx context.Context, in *DeleteCourseRequest, opts ...grpc.CallOption) (*DeleteCourseResponse, error)
+	GetCourses(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetCoursesResponse, error)
+	GetStudents(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetStudentsResponse, error)
+	GetTeachers(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetTeachersResponse, error)
 }
 
 type adminServiceClient struct {
@@ -418,6 +424,33 @@ func (c *adminServiceClient) DeleteCourse(ctx context.Context, in *DeleteCourseR
 	return out, nil
 }
 
+func (c *adminServiceClient) GetCourses(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetCoursesResponse, error) {
+	out := new(GetCoursesResponse)
+	err := c.cc.Invoke(ctx, AdminService_GetCourses_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminServiceClient) GetStudents(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetStudentsResponse, error) {
+	out := new(GetStudentsResponse)
+	err := c.cc.Invoke(ctx, AdminService_GetStudents_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminServiceClient) GetTeachers(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetTeachersResponse, error) {
+	out := new(GetTeachersResponse)
+	err := c.cc.Invoke(ctx, AdminService_GetTeachers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServiceServer is the server API for AdminService service.
 // All implementations must embed UnimplementedAdminServiceServer
 // for forward compatibility
@@ -427,6 +460,9 @@ type AdminServiceServer interface {
 	DeleteTeacher(context.Context, *DeleteTeacherRequest) (*DeleteTeacherResponse, error)
 	AddCourse(context.Context, *AddCourseRequest) (*AddCourseResponse, error)
 	DeleteCourse(context.Context, *DeleteCourseRequest) (*DeleteCourseResponse, error)
+	GetCourses(context.Context, *Empty) (*GetCoursesResponse, error)
+	GetStudents(context.Context, *Empty) (*GetStudentsResponse, error)
+	GetTeachers(context.Context, *Empty) (*GetTeachersResponse, error)
 	mustEmbedUnimplementedAdminServiceServer()
 }
 
@@ -448,6 +484,15 @@ func (UnimplementedAdminServiceServer) AddCourse(context.Context, *AddCourseRequ
 }
 func (UnimplementedAdminServiceServer) DeleteCourse(context.Context, *DeleteCourseRequest) (*DeleteCourseResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteCourse not implemented")
+}
+func (UnimplementedAdminServiceServer) GetCourses(context.Context, *Empty) (*GetCoursesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCourses not implemented")
+}
+func (UnimplementedAdminServiceServer) GetStudents(context.Context, *Empty) (*GetStudentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStudents not implemented")
+}
+func (UnimplementedAdminServiceServer) GetTeachers(context.Context, *Empty) (*GetTeachersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTeachers not implemented")
 }
 func (UnimplementedAdminServiceServer) mustEmbedUnimplementedAdminServiceServer() {}
 
@@ -552,6 +597,60 @@ func _AdminService_DeleteCourse_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AdminService_GetCourses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).GetCourses(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminService_GetCourses_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).GetCourses(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminService_GetStudents_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).GetStudents(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminService_GetStudents_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).GetStudents(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AdminService_GetTeachers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServiceServer).GetTeachers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AdminService_GetTeachers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServiceServer).GetTeachers(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AdminService_ServiceDesc is the grpc.ServiceDesc for AdminService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -578,6 +677,18 @@ var AdminService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteCourse",
 			Handler:    _AdminService_DeleteCourse_Handler,
+		},
+		{
+			MethodName: "GetCourses",
+			Handler:    _AdminService_GetCourses_Handler,
+		},
+		{
+			MethodName: "GetStudents",
+			Handler:    _AdminService_GetStudents_Handler,
+		},
+		{
+			MethodName: "GetTeachers",
+			Handler:    _AdminService_GetTeachers_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
